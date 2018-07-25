@@ -1,12 +1,12 @@
 import { Pipe, PipeTransform } from '@angular/core';
-import Prism from 'prismjs';
+// import Prism from 'prismjs';
 import 'prismjs/plugins/copy-to-clipboard/prism-copy-to-clipboard';
 // import 'prismjs/components/prism-typescript';
 
 // syntax hightlighter
 import '!style-loader!css-loader!prismjs/themes/prism.css';
 
-
+import { DomSanitizer } from '@angular/platform-browser';
 /**
  * Generated class for the HighlightPipe pipe.
  *
@@ -18,28 +18,9 @@ import '!style-loader!css-loader!prismjs/themes/prism.css';
 })
 export class HighlightPipe implements PipeTransform {
 
-  constructor() {
+  constructor(private sanitizer: DomSanitizer) {
   }
-  transform(value: string, ...args) {
-    var el = document.createElement('div');
-    el.innerHTML = value;
-    [].forEach.call(el.querySelectorAll('pre'), (el) => {
-      const language = extractBrushLanguage(el.className);
-      if (language) {
-        el.className += ` language-${language}`;
-      }
-      Prism.highlightElement(el, false);
-    });
-    return el.innerHTML;
+  transform(content) {
+    return this.sanitizer.bypassSecurityTrustHtml(content);
   }
-}
-
-// SyntaxHighlighter Evolved WP plugin support
-function extractBrushLanguage(iCalContent) {
-  var rx = /(?:brush: )(.*?)(?:;)/;
-  var arr = iCalContent.match(rx);
-  if (arr[1] === 'jscript') {
-    return 'javascript';
-  }
-  return arr[1];
 }
