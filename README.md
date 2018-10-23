@@ -36,10 +36,12 @@
 - [X] Social sharing
 - [X] Docker build
 - [X] Admob support
+- [X] Capable on iPhone X Safe Area
 - [ ] App rate plugin
 - [ ] Comments
 - [ ] Push Notifications
 - [ ] Login via JWT
+
 
 ## Thanks
 [Julien Renaux@Github](https://github.com/shprink)
